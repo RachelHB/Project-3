@@ -339,7 +339,6 @@ tRex.pronoun = "he";
 tRex.weakness = "meat";
 tRex.defeated = false;
 
-//fake room
 const tRex1 = new Enemy("T-Rex");
 tRex.conversation = "Roooooaaaarrrrrr";
 tRex.description = "the most deadly Dinosaur ever lived";
@@ -354,20 +353,6 @@ veloc.pronoun = "they";
 veloc.weakness = "";
 veloc.defeated = false;
 
-const sally = new Friend("Sally");
-sally.conversation = "Thank you so much for finding me but to complete your mission you must 'rescue' me. I will reward you with a medal!";
-sally.description = "the last surviver in Jurassic Park.";
-sally.prize = Medal;
-
-
-// add characters to rooms***********************************************************************************************
-coelDino.character = Coel;
-trexDino1.character = tRex;
-veloDino.character = veloc;
-rescueRoom.character = sally;
-
-
-
 //add items**************************************************************************************************************
 const Meat = new item("Bucket of Meat");
 Meat.description = "a large number of steaks to distract the Coelophysis with!";
@@ -379,6 +364,17 @@ Gun.description = "a fully loaded automatic rifle";
 const Medal = new item("Medal");
 Medal.description = "a shiny gold medal. Congratulations! You have WON!";
 
+const sally = new Friend("Sally");
+sally.conversation = "Thank you so much for finding me but to complete your mission you must 'rescue' me. I will reward you with a medal!";
+sally.description = "the last surviver in Jurassic Park.";
+sally.prize = Medal;
+
+// add characters to rooms***********************************************************************************************
+coelDino.character = Coel;
+trexDino1.character = tRex;
+veloDino.character = veloc;
+rescueRoom.character = sally;
+
 //add items to rooms*****************************************************************************************************
 Weapons.item = Gun;
 Droppoint.item = Meat;
@@ -388,7 +384,7 @@ Droppoint.item = Meat;
 function displayRoomInfo(room) {
 
   let occupantMsg = "";
-  let ItemMsg = "";
+  
 
   /******Display any Characters in a room************************************/
   if (room.character === "") {
