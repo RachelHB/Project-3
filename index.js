@@ -140,7 +140,6 @@ class item {
     return this._name;
   }
   get description() {
-
     return this._description;
   }
   get object() {
@@ -287,15 +286,19 @@ const coelDino = new Room("Coelophysis Enclosure");
 coelDino.description = "the area filled with Coelophysis. Don’t let their size fool you. They hunt in large packs. They are also quite agile and boast blade-like cutting teeth. There is an exit to the east of the enclosure.";
 coelDino.defeated = false;
 const trexDino = new Room("T-Rex Enclosure");
-trexDino.description = "the home to the mighty T-Rex. There is a small door to the north of the enclosure, but to get to it you must defeat the T-Rex standing in your way by fighting it!";
+trexDino.description = "the defeated T-Rex laying lifeless on the floor! You may now continue on your mission!";
 trexDino.defeated = false;
 const rescueRoom = new Room("Rescue Room");
-rescueRoom.description = "the room is pretty empty apart from a small crate in the corner. You search the room and find Sally hiding behine the crate. To rescue Sally you must talk to her!";
+rescueRoom.description = "the room is pretty empty apart from a small crate in the corner. You search the room and find Sally hiding behine a crate. To rescue Sally you must talk to her!";
 rescueRoom.defeated = false;
 const veloDino = new Room("Velociraptor Enclosure");
 veloDino.description = "5 hungry Velociraptors. There is NO WAY OUT. You must fight them!";
 veloDino.defeated = false;
 
+//Trex Room with no directions available. Once fight has been typed the user is automatically taken to TrexDino room with directions avaible and the game continues.
+const trexDino1 = new Room("T-Rex Enclosure");
+trexDino1.description = "the home to the mighty T-Rex. \nThere is a small door to the north of the enclosure, but to get to it you must defeat the T-Rex standing in your way by fighting it! \nGood Luck!";
+trexDino1.defeated = false;
 
 
 //link the  rooms together *************************************************************************************************
@@ -304,12 +307,13 @@ Droppoint.linkRoom("east", coelDino);
 Weapons.linkRoom("south", Droppoint);
 Weapons.linkRoom("east", narrowPath);
 narrowPath.linkRoom("west", Weapons);
-narrowPath.linkRoom("east", trexDino);
-coelDino.linkRoom("north", trexDino);
+narrowPath.linkRoom("east", trexDino1);
+coelDino.linkRoom("north", trexDino1);
 coelDino.linkRoom("west", Droppoint);
 coelDino.linkRoom("east", veloDino);
 trexDino.linkRoom("north", rescueRoom);
-trexDino.linkRoom("west", narrowPath);
+//trexDino.linkRoom("west", narrowPath);
+//trexDino1.linkRoom("north", trexDino);
 
 
 //add characters**************************************************************************************************************
@@ -328,6 +332,13 @@ tRex.pronoun = "he";
 tRex.weakness = "meat";
 tRex.defeated = false;
 
+const tRex1 = new Enemy("T-Rex");
+tRex.conversation = "Roooooaaaarrrrrr";
+tRex.description = "the most deadly Dinosaur ever lived";
+tRex.pronoun = "he";
+tRex.weakness = "meat";
+tRex.defeated = false;
+
 const veloc = new Enemy("Velociraptor");
 veloc.conversation = "Grrrrrrrrrrrrr";
 veloc.description = "a medium but deadly Dinosaur. They hunt together and are voracious with their claws";
@@ -336,8 +347,8 @@ veloc.weakness = "";
 veloc.defeated = false;
 
 //add items**************************************************************************************************************
-const Meat = new item("Meat");
-Meat.description = "a large number of steaks in a bucket";
+const Meat = new item("Bucket of Meat");
+Meat.description = "a large number of steaks to distract the Coelophysis with!";
 Meat.object = "meat"
 
 const Gun = new item("Gun");
@@ -348,18 +359,18 @@ Medal.description = "a shiny gold medal. Congratulations! You have WON!";
 
 const sally = new Friend("Sally");
 sally.conversation = "Thank you so much for finding me but to complete your mission you must 'rescue' me. I will reward you with a medal!";
-sally.description = "the last surviver in Jurassic Park";
+sally.description = "the last surviver in Jurassic Park.";
 sally.prize = Medal;
 
 // add characters to rooms***********************************************************************************************
 coelDino.character = Coel;
-trexDino.character = tRex;
+trexDino1.character = tRex;
 veloDino.character = veloc;
 rescueRoom.character = sally;
 
 //add items to rooms*****************************************************************************************************
 Weapons.item = Gun;
-//narrowPath.item = Gun;
+Droppoint.item = Meat;
 
 
 //Subroutine to display information about the current room
@@ -391,13 +402,19 @@ function commandHandler(command, character) {
 
     //Responses when fight command is used on the Dinosaurs pages
     case "fight":
-      if (currentRoom === trexDino || currentRoom === coelDino) {
-        msg = "congratulations you defeated " + character.name;
+      if (currentRoom === trexDino1 || currentRoom === coelDino) {
+        msg = "Congratulations you have defeated the mighty " + character.name;
         alert(msg)        
         document.getElementById("usertext").value = "";
+        trexDino1.linkRoom("north", trexDino);  
+        currentRoom = currentRoom.move("north");
+        tRex.description = "now dead and you can continue!"
+        displayRoomInfo(currentRoom);
+
       } else if (currentRoom === veloDino) {       
         alert("You cannot defeat the Velociraptors, there are too many. \nYou have been KILLED! ");
         startGame(location.reload());
+
       } else {
         alert("You can't reform that task here",);
         document.getElementById("usertext").value = "";
