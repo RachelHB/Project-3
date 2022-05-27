@@ -30,14 +30,6 @@ class Room {
     return this._item
   }
 
-  set defeated(value) {
-    if (value.length < 4) {
-      alert("Description is too short.");
-      return;
-    }
-    this._defeated = false;
-  }
-
   get defeated() {
     return this._defeated
   }
@@ -65,6 +57,14 @@ class Room {
 
   set item(value) {
     this._item = value;
+  }
+
+  set defeated(value) {
+    if (value.length < 4) {
+      alert("Description is too short.");
+      return;
+    }
+    this._defeated = false;
   }
 
   /*a method to produce friendly room description*/
@@ -152,13 +152,13 @@ class item {
   }
 
   /*a method to take an item*/
-  take(item) {
-    if (item = this._object) {
-      return true;
-    } else {
-      return false;
-    }
-  }
+  // take(item) {
+  //   if (item = this._object) {
+  //     return true;
+  //   } else {
+  //     return false;
+  //   }
+  // }
 
 }
 
@@ -223,11 +223,12 @@ class Friend extends Character {
     super(name)
     this._prize = ""
   }
-
+  /******setting************************************/
   set prize(value) {
     this._prize = value
   }
 
+  /******getting************************************/
   get prize() {
     return this._prize
   }
@@ -249,6 +250,7 @@ class Enemy extends Character {
     
   }
 
+  /******setting************************************/
   set weakness(value) {
     if (value.length < 4) {
       //alert("Description is too short.test1");
@@ -256,7 +258,6 @@ class Enemy extends Character {
     }
     this._weakness = value;
   }
-
 
 
   /*a method to determine the result of fighting an enemy*/
@@ -276,21 +277,27 @@ class Enemy extends Character {
 const Droppoint = new Room("Droppoint");
 Droppoint.description = "a small clearing. There is a dense forest to the east and a small hut to the west.";
 Droppoint.defeated = false;
+
 const Weapons = new Room("Weapons Room");
 Weapons.description = "the small room has a table in the middle and a small back door to the east.";
 Weapons.defeated = false;
+
 const narrowPath = new Room("Narrow Path");
 narrowPath.description = "heading east there is an enormous enclosure with a broken door. Could Sally be in there?";
 narrowPath.defeated = false;
+
 const coelDino = new Room("Coelophysis Enclosure");
 coelDino.description = "the area filled with Coelophysis. Don’t let their size fool you. They hunt in large packs. They are also quite agile and boast blade-like cutting teeth. There is an exit to the east of the enclosure.";
 coelDino.defeated = false;
+
 const trexDino = new Room("T-Rex Enclosure");
 trexDino.description = "the defeated T-Rex laying lifeless on the floor! You may now continue on your mission!";
 trexDino.defeated = false;
+
 const rescueRoom = new Room("Rescue Room");
 rescueRoom.description = "the room is pretty empty apart from a small crate in the corner. You search the room and find Sally hiding behine a crate. To rescue Sally you must talk to her!";
 rescueRoom.defeated = false;
+
 const veloDino = new Room("Velociraptor Enclosure");
 veloDino.description = "5 hungry Velociraptors. There is NO WAY OUT. You must fight them!";
 veloDino.defeated = false;
@@ -332,6 +339,7 @@ tRex.pronoun = "he";
 tRex.weakness = "meat";
 tRex.defeated = false;
 
+//fake room
 const tRex1 = new Enemy("T-Rex");
 tRex.conversation = "Roooooaaaarrrrrr";
 tRex.description = "the most deadly Dinosaur ever lived";
@@ -346,6 +354,20 @@ veloc.pronoun = "they";
 veloc.weakness = "";
 veloc.defeated = false;
 
+const sally = new Friend("Sally");
+sally.conversation = "Thank you so much for finding me but to complete your mission you must 'rescue' me. I will reward you with a medal!";
+sally.description = "the last surviver in Jurassic Park.";
+sally.prize = Medal;
+
+
+// add characters to rooms***********************************************************************************************
+coelDino.character = Coel;
+trexDino1.character = tRex;
+veloDino.character = veloc;
+rescueRoom.character = sally;
+
+
+
 //add items**************************************************************************************************************
 const Meat = new item("Bucket of Meat");
 Meat.description = "a large number of steaks to distract the Coelophysis with!";
@@ -357,17 +379,6 @@ Gun.description = "a fully loaded automatic rifle";
 const Medal = new item("Medal");
 Medal.description = "a shiny gold medal. Congratulations! You have WON!";
 
-const sally = new Friend("Sally");
-sally.conversation = "Thank you so much for finding me but to complete your mission you must 'rescue' me. I will reward you with a medal!";
-sally.description = "the last surviver in Jurassic Park.";
-sally.prize = Medal;
-
-// add characters to rooms***********************************************************************************************
-coelDino.character = Coel;
-trexDino1.character = tRex;
-veloDino.character = veloc;
-rescueRoom.character = sally;
-
 //add items to rooms*****************************************************************************************************
 Weapons.item = Gun;
 Droppoint.item = Meat;
@@ -377,19 +388,24 @@ Droppoint.item = Meat;
 function displayRoomInfo(room) {
 
   let occupantMsg = "";
-  
+  let ItemMsg = "";
+
+  /******Display any Characters in a room************************************/
   if (room.character === "") {
-    if (room.item == "") {
       occupantMsg = "";
-    } else {      
-      occupantMsg = room.item.describe();
-    }
-  } else {
-    occupantMsg = room.character.describe() + ". ";
+  } else {      
+      occupantMsg = room.character.describe();
   }
 
-  textContent = "<p>" + room.describe() + "</p>" + "<p>" + occupantMsg + "</p>" + "<p>" + room.getDetails() + "</p>";
+  /******Display any Items in a room************************************/
+  if (room.item === "") {
+       ItemMsg = "";
+  } else {      
+    ItemMsg = room.item.describe();
+  }
 
+ /******Display all variables in given order************************************/
+  textContent = "<p>" + room.describe() + "</p>" + "<p>" + occupantMsg + "</p>" + "<p>" + ItemMsg + "</p>" + "<p>" + room.getDetails() + "</p>";
 
     document.getElementById("textarea").innerHTML = textContent;
     document.getElementById("buttonarea").innerHTML = '><input type="text" id="usertext" />';
