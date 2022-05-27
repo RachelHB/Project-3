@@ -334,14 +334,14 @@ Coel.defeated = false;
 
 const tRex = new Enemy("T-Rex");
 tRex.conversation = "Roooooaaaarrrrrr";
-tRex.description = "the most deadly Dinosaur ever lived";
+tRex.description = "the most deadliest Dinosaur that ever lived";
 tRex.pronoun = "he";
 tRex.weakness = "meat";
 tRex.defeated = false;
 
 const tRex1 = new Enemy("T-Rex");
 tRex.conversation = "Roooooaaaarrrrrr";
-tRex.description = "the most deadly Dinosaur ever lived";
+tRex.description = "the most deadliest Dinosaur that ever lived";
 tRex.pronoun = "he";
 tRex.weakness = "meat";
 tRex.defeated = false;
