@@ -1,0 +1,64 @@
+/* .container {
+  background-color: black;
+} */
+
+body{
+  text-align: left;
+  background-color: black;
+  background-image:  url("Jurassic\ Park.jpg");
+  background-repeat: no-repeat;
+  background-position-y: -3%;
+  background-position-x: 120%;
+  background-size: auto; 
+  
+  }
+  
+#gamearea
+  {
+    /*position: absolute;*/
+    text-align: left;
+    margin: auto;
+    top: 20;
+    right:20;
+    left: 20;
+    height:750px;
+    width:1000px;
+    /* background-image: url("Jurassic\ Park.jpg"); */
+    /* border-radius: 70px; */
+    color: #e9ab12;
+    padding-top:30px;
+    padding-left:150px;
+    padding-right:150px;
+    font-size: 16px;
+    font-family: montserrat;
+  }
+
+  input{
+    color:white;
+    background-color:transparent;
+    border: 0px;
+  }
+
+  input:focus {
+    outline: none !important;
+    border-color: #719ECE;
+    /*box-shadow: 0 0 10px #719ECE;*/
+  }
+
+  #startbutton
+  {
+    background-color:#e9ab12;
+    border: #970104 solid;
+    border-width: 5px;
+    border-radius: 50px;
+    color: black;
+    padding: 10px 20px;
+    text-align: center;
+    display: inline-block;
+    font-size: 20px;
+    font-family: josefin sans;
+    transition-duration: 0.4s;
+    cursor: pointer;
+    width: 30% ;
+   
+  }
